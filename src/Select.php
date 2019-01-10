@@ -152,7 +152,7 @@ class Select extends Expression
     public function toSql(): string
     {
         $selects = Stream::of($this->selects);
-        $sql = 'SELECT '.join(', ', $selects->map([$this->getBuilder(), 'val'])->map(Invoke::toSql())->collect());
+        $sql = 'SELECT '.join(', ', $selects->map([$this->getBuilder(), 'val'])->map(Invoke::toSelectSql())->collect());
         if($this->from === null){
             return $sql;
         }

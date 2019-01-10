@@ -39,6 +39,8 @@ class Join extends Expression implements Aliasable
      */
     protected $on;
 
+    protected $index = 1;
+
     /**
      * Join constructor.
      * @param Builder $builder
@@ -52,6 +54,43 @@ class Join extends Expression implements Aliasable
         $this->from = $builder->table($from);
         $this->join = $builder->table($join);
         $this->type = $type;
+    }
+
+    /**
+     * @param static|null &$var
+     * @param null|string $asName
+     * @return static
+     */
+    public function as(&$var, $asName = null){
+        if($asName !== null){
+            $this->asName($asName);
+        }
+        $var = $this->join;
+        return $this;
+    }
+
+    /**
+     * @param string|null $asName
+     * @return static
+     */
+    public function asName($asName = null){
+        $this->join->asName($asName);
+        return $this;
+    }
+
+    /**
+     * @param DataSource $join
+     * @param string $type
+     * @return Join
+     */
+    public function join($join, $type = 'inner'){
+        $join = $this->getBuilder()
+            ->createExpression(Join::class, $this, $join, $type);
+        $join->index += 1;
+        if($join->join->getAlias() === null){
+            $join->join->asName('t'.$join->index);
+        }
+        return $join;
     }
 
     /**
@@ -88,27 +127,6 @@ class Join extends Expression implements Aliasable
             $bind = $bind->concat($this->on->bindings());
         }
         return $bind->flatten()->collect();
-    }
-
-    /**
-     * @param static &$var
-     * @param string|null $name
-     * @return static
-     */
-    public function as(&$var, $name = null)
-    {
-        $this->from->as($var, $name);
-        return $this;
-    }
-
-    /**
-     * @param string|null $name
-     * @return static
-     */
-    public function asName($name = null)
-    {
-        $this->from->asName($name);
-        return $this;
     }
 
     /**
