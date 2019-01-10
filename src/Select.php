@@ -15,10 +15,11 @@ use Eslym\SqlBuilder\Dml\Interfaces\DataSource;
 use Eslym\SqlBuilder\Dml\Traits\Limitable;
 use Eslym\SqlBuilder\Dml\Traits\Queryable;
 use Eslym\SqlBuilder\Dml\Traits\Sortable;
+use Eslym\SqlBuilder\Dml\Traits\Unionable;
 
 class Select extends Expression
 {
-    use Queryable, Sortable, Limitable;
+    use Queryable, Sortable, Limitable, Unionable;
 
     /**
      * @var iterable

@@ -53,7 +53,7 @@ class Union extends Expression
      */
     function toSql(): string
     {
-        if($this->orders === null && $this->limit){
+        if($this->orders === null && $this->limit === null){
             return $this->originalSql();
         }
         $sql = '('.$this->originalSql().')';
@@ -83,10 +83,10 @@ class Union extends Expression
     protected function originalSql(){
         $first = $this->firstQuery instanceof Union ?
             $this->firstQuery->originalSql() :
-            $this->firstQuery->toSql();
+            '('.$this->firstQuery->toSql().')';
         $second = $this->secondQuery instanceof Union ?
             $this->secondQuery->originalSql() :
-            $this->secondQuery->toSql();
+            '('.$this->secondQuery->toSql().')';
         $union = ' UNION ';
         if($this->type !== null){
             $union = ' '.strtoupper($this->type).$union;

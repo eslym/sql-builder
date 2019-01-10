@@ -62,10 +62,7 @@ class Join extends Expression implements Aliasable
      * @return static
      */
     public function as(&$var, $asName = null){
-        if($asName !== null){
-            $this->asName($asName);
-        }
-        $var = $this->join;
+        $this->join->as($var, $asName);
         return $this;
     }
 
