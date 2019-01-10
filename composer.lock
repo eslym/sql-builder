@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9973acc6781ab62faae5287d7ab235f4",
+    "content-hash": "8926ff96e131b2d8a1964d2aee2eb78d",
     "packages": [
         {
             "name": "eslym/php-light-stream",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/eslym/php-light-stream.git",
-                "reference": "cb01b26194c7b2ca348e2c3f28c5187a1e117738"
+                "reference": "e1f6c516f2c48f303113e21eb00adff33e2df498"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eslym/php-light-stream/zipball/cb01b26194c7b2ca348e2c3f28c5187a1e117738",
-                "reference": "cb01b26194c7b2ca348e2c3f28c5187a1e117738",
+                "url": "https://api.github.com/repos/eslym/php-light-stream/zipball/e1f6c516f2c48f303113e21eb00adff33e2df498",
+                "reference": "e1f6c516f2c48f303113e21eb00adff33e2df498",
                 "shasum": ""
             },
             "require": {
@@ -40,7 +40,7 @@
                 }
             ],
             "description": "Very very lightweight stream",
-            "time": "2019-01-03T15:17:54+00:00"
+            "time": "2019-01-09T12:46:38+00:00"
         },
         {
             "name": "nesbot/carbon",
