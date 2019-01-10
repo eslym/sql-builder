@@ -19,7 +19,7 @@ class Merge extends Expression
     public function __construct($builder, ...$expressions)
     {
         parent::__construct($builder);
-        $this->expressions = Stream::of($expressions)->map([$this->getBuilder(), 'val']);
+        $this->expressions = $expressions;
     }
 
     /**
@@ -27,7 +27,9 @@ class Merge extends Expression
      */
     function toSql(): string
     {
-        return join(' ', $this->expressions->map(Invoke::toSql())->collect());
+        $expr = Stream::of($this->expressions)
+            ->map([$this->getBuilder(), 'val']);
+        return join(' ', $expr->map(Invoke::toSql())->collect());
     }
 
     /**
@@ -35,6 +37,8 @@ class Merge extends Expression
      */
     function bindings(): array
     {
-        return $this->expressions->map(Invoke::bindings())->flatten()->collect();
+        $expr = Stream::of($this->expressions)
+            ->map([$this->getBuilder(), 'val']);
+        return $expr->map(Invoke::bindings())->flatten()->collect();
     }
 }

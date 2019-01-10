@@ -58,6 +58,7 @@ class Union extends Expression
         }
         $sql = '('.$this->originalSql().')';
         if($this->orders !== null){
+            $this->orders->rewind();
             $sql.= ' ORDER BY '.join(', ', $this->orders->map(Invoke::toSql())->collect());
         }
         if($this->limit !== null){
@@ -75,7 +76,7 @@ class Union extends Expression
             return $this->originalBindings();
         }
         $bind = Stream::of($this->originalBindings());
-        $bind = $bind->concat($this->orders->map(Invoke::bindings()));
+        $bind = $bind->concat(Stream::of($this->orders)->map(Invoke::bindings()));
         return $bind->flatten()->collect();
     }
 

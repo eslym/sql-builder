@@ -73,9 +73,8 @@ class SqlCase extends Expression implements Operand
 
     public function bindings(): array
     {
-        $bind = Stream::of($this->case->bindings())
+        $bind = Stream::of([$this->case])
             ->concat($this->when)
-            ->flatten()
             ->map(Invoke::bindings());
         if($this->else !== null){
             $bind = $bind->concat($this->else->bindings());

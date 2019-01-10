@@ -19,7 +19,7 @@ class Raw extends Expression
     protected $sql;
 
     /**
-     * @var Stream
+     * @var iterable
      */
     protected $bindings;
 
@@ -39,7 +39,7 @@ class Raw extends Expression
             $bindings = $bindings[0];
         }
         $this->sql = $sql;
-        $this->bindings = Stream::of($bindings);
+        $this->bindings = $bindings;
     }
 
     /**
@@ -55,6 +55,6 @@ class Raw extends Expression
      */
     function bindings(): array
     {
-        return $this->bindings->collect();
+        return Stream::of($this->bindings)->collect();
     }
 }

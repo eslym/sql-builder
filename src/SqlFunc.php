@@ -23,7 +23,7 @@ class SqlFunc extends Expression implements Operand
     protected $name;
 
     /**
-     * @var Stream
+     * @var iterable
      */
     protected $arguments;
 
@@ -37,7 +37,7 @@ class SqlFunc extends Expression implements Operand
     {
         parent::__construct($builder);
         $this->name = $name;
-        $this->arguments = Stream::of($arguments)->map([$builder, 'val']);
+        $this->arguments = $arguments;
     }
 
     /**
@@ -45,8 +45,14 @@ class SqlFunc extends Expression implements Operand
      */
     function toSql(): string
     {
+        $this->arguments->rewind();
         return strtoupper($this->name).'('.
-            join(', ', $this->arguments->map(Invoke::toSql())->collect()).')';
+            join(', ',
+                Stream::of($this->arguments)
+                    ->map([$this->getBuilder(), 'val'])
+                    ->map(Invoke::toSql())
+                    ->collect()
+            ).')';
     }
 
     /**
@@ -54,8 +60,9 @@ class SqlFunc extends Expression implements Operand
      */
     function bindings(): array
     {
-        return $this->arguments
-            ->map(Invoke::bindings)
+        return Stream::of($this->arguments)
+            ->map([$this->getBuilder(), 'val'])
+            ->map(Invoke::bindings())
             ->flatten()
             ->collect();
     }

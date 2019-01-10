@@ -18,7 +18,7 @@ class Values extends Expression
     public function __construct($builder, $values)
     {
         parent::__construct($builder);
-        $this->values = Stream::of($values)->map([$builder, 'val']);
+        $this->values = $values;
     }
 
     /**
@@ -26,7 +26,13 @@ class Values extends Expression
      */
     function toSql(): string
     {
-        return '('.join(', ', $this->values->map(Invoke::toSql())->collect()).')';
+        $this->values->rewind();
+        return '('.join(', ',
+                Stream::of($this->values)
+                    ->map([$this->getBuilder(), 'val'])
+                    ->map(Invoke::toSql())
+                    ->collect()
+            ).')';
     }
 
     /**
@@ -34,6 +40,10 @@ class Values extends Expression
      */
     function bindings(): array
     {
-        return $this->values->map(Invoke::bindings())->flatten()->collect();
+        return Stream::of($this->values)
+            ->map([$this->getBuilder(), 'val'])
+            ->map(Invoke::bindings())
+            ->flatten()
+            ->collect();
     }
 }

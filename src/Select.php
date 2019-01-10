@@ -21,7 +21,7 @@ class Select extends Expression
     use Queryable, Sortable, Limitable;
 
     /**
-     * @var Stream
+     * @var iterable
      */
     protected $selects;
 
@@ -36,7 +36,7 @@ class Select extends Expression
     protected $where;
 
     /**
-     * @var Stream
+     * @var iterable
      */
     protected $groups;
 
@@ -52,7 +52,7 @@ class Select extends Expression
     public function __construct($builder)
     {
         parent::__construct($builder);
-        $this->selects = Stream::of([$builder->allColumn()]);
+        $this->selects = [$builder->allColumn()];
     }
 
     /**
@@ -61,9 +61,9 @@ class Select extends Expression
      */
     public function select(...$selects){
         if(count($selects) == 1 && Stream::isIterable($selects[0])){
-            $this->selects = Stream::of($selects[0]);
+            $this->selects = $selects[0];
         } else {
-            $this->selects = Stream::of($selects);
+            $this->selects = $selects;
         }
         return $this;
     }
@@ -82,10 +82,11 @@ class Select extends Expression
      * @return $this
      */
     public function addSelect(...$selects){
+        $sel = Stream::of($this->selects);
         if(count($selects) == 1 && Stream::isIterable($selects[0])){
-            $this->selects = $this->selects->concat($selects[0]);
+            $this->selects = $sel->concat($selects[0])->collect();
         } else {
-            $this->selects = $this->selects->concat($selects);
+            $this->selects = $sel->concat($selects)->collect();
         }
         return $this;
     }
@@ -105,9 +106,9 @@ class Select extends Expression
      */
     public function groupBy(...$groups){
         if(count($groups) == 1 && Stream::isIterable($groups[0])){
-            $this->groups = Stream::of($groups[0]);
+            $this->groups = $groups[0];
         } else {
-            $this->groups = Stream::of($groups);
+            $this->groups = $groups;
         }
         return $this;
     }
@@ -117,12 +118,13 @@ class Select extends Expression
      * @return $this
      */
     public function addGroup(...$groups){
+        $g = Stream::of($this->groups);
         if($this->groups === null){
             $this->groupBy(...$groups);
         } else if(count($groups) == 1 && Stream::isIterable($groups[0])){
-            $this->groups = $this->selects->concat($groups[0]);
+            $this->groups = $g->concat($groups[0])->collect();
         } else {
-            $this->groups = $this->selects->concat($groups);
+            $this->groups = $g->concat($groups)->collect();
         }
         return $this;
     }
@@ -149,7 +151,8 @@ class Select extends Expression
      */
     public function toSql(): string
     {
-        $sql = 'SELECT '.join(', ', $this->selects->map(Invoke::toSql())->collect());
+        $selects = Stream::of($this->selects);
+        $sql = 'SELECT '.join(', ', $selects->map([$this->getBuilder(), 'val'])->map(Invoke::toSql())->collect());
         if($this->from === null){
             return $sql;
         }
@@ -158,7 +161,7 @@ class Select extends Expression
             $sql.= $this->where->toSql();
         }
         if($this->groups !== null){
-            $groups = $this->groups
+            $groups = Stream::of($this->groups)
                 ->map([$this->getBuilder(), 'val'])
                 ->map(Invoke::toSql())
                 ->collect();
@@ -170,7 +173,8 @@ class Select extends Expression
             }
         }
         if($this->orders !== null){
-            $sql.= ' ORDER BY '.join(', ', $this->orders->map(Invoke::toSql())->collect());
+            $orders = Stream::of($this->orders);
+            $sql.= ' ORDER BY '.join(', ', $orders->map(Invoke::toSql())->collect());
         }
         if($this->limit !== null){
             $sql.= sprintf(' LIMIT %d', $this->limit);
@@ -183,7 +187,10 @@ class Select extends Expression
 
     public function bindings(): array
     {
-        $bind = $this->selects->map(Invoke::bindings());
+        $selects = Stream::of($this->selects);
+        $bind = $selects
+            ->map([$this->getBuilder(), 'val'])
+            ->map(Invoke::bindings());
         if($this->from === null){
             return $bind->flatten()->collect();
         }
@@ -193,13 +200,13 @@ class Select extends Expression
         }
         if($this->groups !== null){
             $bind = $bind->concat(
-                $this->groups
+                Stream::of($this->groups)
                     ->map([$this->getBuilder(), 'val'])
                     ->map(Invoke::bindings())
             );
         }
         if($this->orders !== null){
-            $bind = $bind->concat($this->orders->map(Invoke::bindings()));
+            $bind = $bind->concat(Stream::of($this->orders)->map(Invoke::bindings()));
         }
         return $bind->flatten()->collect();
     }

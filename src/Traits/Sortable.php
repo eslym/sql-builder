@@ -21,7 +21,7 @@ use Eslym\SqlBuilder\Dml\Select;
 trait Sortable
 {
     /**
-     * @var Stream
+     * @var array
      */
     protected $orders;
 
@@ -34,9 +34,9 @@ trait Sortable
         $builder = $this->getBuilder();
         $exp = $builder->createExpression(Merge::class, $expr, $builder->raw(strtoupper($order)));
         if($this->orders === null){
-            $this->orders = Stream::of([$exp]);
+            $this->orders = [$exp];
         } else {
-            $this->orders->concat([$exp]);
+            array_push($this->orders, $exp);
         }
         return $this;
     }
