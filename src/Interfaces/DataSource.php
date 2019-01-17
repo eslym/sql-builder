@@ -11,7 +11,7 @@ namespace Eslym\SqlBuilder\Dml\Interfaces;
 
 use Eslym\SqlBuilder\Dml\Column;
 
-interface DataSource
+interface DataSource extends Selectable
 {
     /**
      * @param $name

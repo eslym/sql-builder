@@ -20,7 +20,7 @@ use Eslym\SqlBuilder\Dml\Expression;
  */
 trait DataSource
 {
-    use Aliasable;
+    use Aliasable, Selectable;
 
     /**
      * @param $name
