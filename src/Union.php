@@ -9,6 +9,7 @@
 namespace Eslym\SqlBuilder\Dml;
 
 
+use Eslym\LightStream\Invoke;
 use Eslym\LightStream\Stream;
 use Eslym\SqlBuilder\Dml\Traits\Limitable;
 use Eslym\SqlBuilder\Dml\Traits\Queryable;
@@ -39,6 +40,7 @@ class Union extends Expression
      * @param Builder $builder
      * @param Select|Union $firstQuery
      * @param Select|Union $secondQuery
+     * @param string|null $type
      */
     public function __construct($builder, $firstQuery, $secondQuery, $type = null)
     {

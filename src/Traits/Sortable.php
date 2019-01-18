@@ -8,10 +8,8 @@
 
 namespace Eslym\SqlBuilder\Dml\Traits;
 
-use Eslym\LightStream\Stream;
 use Eslym\SqlBuilder\Dml\Expression;
 use Eslym\SqlBuilder\Dml\Merge;
-use Eslym\SqlBuilder\Dml\Select;
 
 /**
  * Trait Sortable

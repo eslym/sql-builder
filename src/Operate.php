@@ -10,7 +10,6 @@ namespace Eslym\SqlBuilder\Dml;
 
 
 use Eslym\SqlBuilder\Dml\Interfaces\Operand;
-use Eslym\SqlBuilder\Dml\Interfaces\Aliasable;
 use Eslym\SqlBuilder\Dml\Traits\Operand as OperandImpl;
 
 class Operate extends Merge implements Operand
