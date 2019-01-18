@@ -76,7 +76,7 @@ class Builder
      * @return SqlFunc
      */
     public function func($name, ...$arguments){
-        return new SqlFunc($this, $name, $arguments);
+        return $this->createExpression(SqlFunc::class, $name, $arguments);
     }
 
     /**
