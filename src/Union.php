@@ -58,8 +58,7 @@ class Union extends Expression
         }
         $sql = '('.$this->originalSql().')';
         if($this->orders !== null){
-            $this->orders->rewind();
-            $sql.= ' ORDER BY '.join(', ', $this->orders->map(Invoke::toSql())->collect());
+            $sql.= ' ORDER BY '.join(', ', Stream::of($this->orders)->map(Invoke::toSql())->collect());
         }
         if($this->limit !== null){
             $sql.= sprintf(' LIMIT %d', $this->limit);

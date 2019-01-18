@@ -26,7 +26,6 @@ class Values extends Expression
      */
     function toSql(): string
     {
-        $this->values->rewind();
         return '('.join(', ',
                 Stream::of($this->values)
                     ->map([$this->getBuilder(), 'val'])
