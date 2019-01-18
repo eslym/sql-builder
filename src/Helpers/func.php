@@ -13,7 +13,7 @@ use Eslym\SqlBuilder\Dml\Builder;
 
 class func
 {
-    public static function __callStatic($name, ...$arguments)
+    public static function __callStatic($name, $arguments)
     {
         return sql::func($name, ...$arguments);
     }
@@ -29,7 +29,7 @@ class func
         $this->builder = $builder;
     }
 
-    public function __call($name, ...$arguments)
+    public function __call($name, $arguments)
     {
         return $this->builder->func($name, ...$arguments);
     }
