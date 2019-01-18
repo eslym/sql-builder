@@ -2,7 +2,7 @@
   "name": "eslym/sql-dml-builder",
   "description": "SQL DML Builder",
   "minimum-stability": "stable",
-  "version": "0.1.4-beta",
+  "version": "0.1.5-beta",
   "license": "proprietary",
   "authors": [
     {
