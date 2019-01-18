@@ -8,7 +8,7 @@
 
 namespace Eslym\SqlBuilder\Dml\Traits;
 
-use EsLym\LightStream\Stream;
+use Eslym\LightStream\Stream;
 use Eslym\SqlBuilder\Dml\Expression;
 use Eslym\SqlBuilder\Dml\Merge;
 use Eslym\SqlBuilder\Dml\Select;

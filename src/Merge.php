@@ -10,7 +10,7 @@ namespace Eslym\SqlBuilder\Dml;
 
 
 use Eslym\LightStream\Invoke;
-use EsLym\LightStream\Stream;
+use Eslym\LightStream\Stream;
 
 class Merge extends Expression
 {

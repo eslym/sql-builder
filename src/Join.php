@@ -9,7 +9,7 @@
 namespace Eslym\SqlBuilder\Dml;
 
 
-use EsLym\LightStream\Stream;
+use Eslym\LightStream\Stream;
 use Eslym\SqlBuilder\Dml\Interfaces\DataSource;
 use Eslym\SqlBuilder\Dml\Interfaces\Aliasable;
 use Eslym\SqlBuilder\Dml\Traits\Joinable;

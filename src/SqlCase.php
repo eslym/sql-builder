@@ -10,7 +10,7 @@ namespace Eslym\SqlBuilder\Dml;
 
 
 use Eslym\LightStream\Invoke;
-use EsLym\LightStream\Stream;
+use Eslym\LightStream\Stream;
 use Eslym\SqlBuilder\Dml\Interfaces\Operand;
 use Eslym\SqlBuilder\Dml\Traits\Operand as OperandImpl;
 

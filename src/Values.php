@@ -9,7 +9,7 @@
 namespace Eslym\SqlBuilder\Dml;
 
 
-use EsLym\LightStream\Stream;
+use Eslym\LightStream\Stream;
 
 class Values extends Expression
 {
