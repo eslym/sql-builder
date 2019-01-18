@@ -45,7 +45,6 @@ class SqlFunc extends Expression implements Operand
      */
     function toSql(): string
     {
-        $this->arguments->rewind();
         return strtoupper($this->name).'('.
             join(', ',
                 Stream::of($this->arguments)
