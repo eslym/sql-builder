@@ -2,7 +2,6 @@
   "name": "eslym/sql-dml-builder",
   "description": "SQL DML Builder",
   "minimum-stability": "stable",
-  "version": "0.1.9-beta",
   "license": "proprietary",
   "authors": [
     {
@@ -19,5 +18,8 @@
     "php": "^7.1",
     "nesbot/carbon": ">1.0.0",
     "eslym/php-light-stream": ">=1.0.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "8"
   }
 }

@@ -20,7 +20,7 @@ use Eslym\SqlBuilder\Dml\Join;
 trait Joinable
 {
     /**
-     * @param DataSource|Join $join
+     * @param DataSource|Join|string $join
      * @param string $type
      * @return Join
      */

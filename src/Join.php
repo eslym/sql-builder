@@ -12,10 +12,11 @@ namespace Eslym\SqlBuilder\Dml;
 use Eslym\LightStream\Stream;
 use Eslym\SqlBuilder\Dml\Interfaces\DataSource;
 use Eslym\SqlBuilder\Dml\Interfaces\Aliasable;
+use Eslym\SqlBuilder\Dml\Interfaces\Joinable as IJoinable;
 use Eslym\SqlBuilder\Dml\Traits\Joinable;
 use Eslym\SqlBuilder\Dml\Traits\Selectable;
 
-class Join extends Expression implements Aliasable
+class Join extends Expression implements Aliasable, IJoinable
 {
     use Joinable, Selectable;
 
@@ -76,16 +77,16 @@ class Join extends Expression implements Aliasable
     }
 
     /**
-     * @param DataSource $join
+     * @param Join|Traits\DataSource|string $join
      * @param string $type
-     * @return Join
+     * @return Join|Traits\DataSource|mixed|string
      */
     public function join($join, $type = 'inner'){
         $join = $this->getBuilder()
             ->createExpression(Join::class, $this, $join, $type);
-        $join->index += 1;
-        if($join->join->getAlias() === null){
-            $join->join->asName('t'.$join->index);
+        $join->index = $this->index + 1;
+        if($this->join->getAlias() === null){
+            $this->join->asName('t'.$this->index);
         }
         return $join;
     }

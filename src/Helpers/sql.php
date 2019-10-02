@@ -17,12 +17,13 @@ use Eslym\SqlBuilder\Dml\Interfaces\DataSource;
 use Eslym\SqlBuilder\Dml\Interfaces\Operand;
 use Eslym\SqlBuilder\Dml\Raw;
 use Eslym\SqlBuilder\Dml\SqlFunc;
+use Eslym\SqlBuilder\Dml\Table;
 
 /**
  * Class sql
  * @package Eslym\SqlBuilder\Dml\Helpers
  *
- * @method static DataSource table(DataSource|string $name)
+ * @method static Table table(DataSource|string $name)
  * @method static Expression|Operand val($value)
  * @method static SqlFunc func(string $name, ...$arguments)
  * @method static Expression|Operand|Aliasable date($date)

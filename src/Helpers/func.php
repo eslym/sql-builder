@@ -13,6 +13,11 @@ use Eslym\SqlBuilder\Dml\Builder;
 
 class func
 {
+    /**
+     * @param $name
+     * @param $arguments
+     * @return \Eslym\SqlBuilder\Dml\SqlFunc
+     */
     public static function __callStatic($name, $arguments)
     {
         return sql::func($name, ...$arguments);
@@ -29,6 +34,11 @@ class func
         $this->builder = $builder;
     }
 
+    /**
+     * @param $name
+     * @param $arguments
+     * @return \Eslym\SqlBuilder\Dml\SqlFunc
+     */
     public function __call($name, $arguments)
     {
         return $this->builder->func($name, ...$arguments);

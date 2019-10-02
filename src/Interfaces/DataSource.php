@@ -11,7 +11,7 @@ namespace Eslym\SqlBuilder\Dml\Interfaces;
 
 use Eslym\SqlBuilder\Dml\Column;
 
-interface DataSource extends Selectable
+interface DataSource extends Selectable, Joinable
 {
     /**
      * @param $name
@@ -41,4 +41,6 @@ interface DataSource extends Selectable
      * @return string
      */
     public function getWrappedName(): string;
+
+
 }

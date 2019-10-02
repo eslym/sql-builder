@@ -39,4 +39,12 @@ class AllColumn extends Expression
         }
         return '*';
     }
+
+    /**
+     * @return string
+     */
+    function toSelectSql():string
+    {
+        return $this->toSql();
+    }
 }

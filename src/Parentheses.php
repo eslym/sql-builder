@@ -37,7 +37,7 @@ class Parentheses extends Expression implements Operand
      */
     function toSql(): string
     {
-        return '('.$this->inner.')';
+        return '('.$this->inner->toSql().')';
     }
 
     function bindings(): array
